@@ -44,10 +44,4 @@ describe("*** create confirmation Emil link test suite ***", () => {
         const value  = await redis.get(key);
         expect(value).toBeNull();
     });
-
-    it("should return invalid",async () => {
-        const res = await nodeFetch(`${process.env.TEST_HOST}/confirm/cavapasmarcherfrer`);
-        const text = await res.text();
-        expect(text).toBe("invalid");
-    })
 })
