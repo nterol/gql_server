@@ -22,6 +22,7 @@ declare namespace GQL {
 
   interface IQuery {
     __typename: 'Query';
+    coucou: string;
     bye: string;
     hello: string;
   }
@@ -32,7 +33,13 @@ declare namespace GQL {
 
   interface IMutation {
     __typename: 'Mutation';
+    login: Array<IError> | null;
     register: Array<IError> | null;
+  }
+
+  interface ILoginOnMutationArguments {
+    email: string;
+    password: string;
   }
 
   interface IRegisterOnMutationArguments {

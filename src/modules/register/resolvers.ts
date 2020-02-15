@@ -12,7 +12,7 @@ import {
     wongPasswordLength,
 } from './errorMessages';
 import { createConfirmEmailLink } from '../../utils/createConfirmedEmailLink';
-import { sendEmail } from '../../utils/sendEmail';
+// import { sendEmail } from '../../utils/sendEmail';
 
 const schema = yup.object().shape({
     email: yup
@@ -68,7 +68,8 @@ export const resolvers: ResolveMap = {
 
             if (process.env.NODE_ENV !== 'test') {
                 const link = await createConfirmEmailLink(url, user.id, redis);
-                await sendEmail(email, link);
+                console.log(email, link);
+                // await sendEmail(email, link);
             }
 
             return null;

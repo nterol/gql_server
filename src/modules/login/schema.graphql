@@ -1,9 +1,9 @@
 #import Error from "../../shared.graphql"
 
 type Query {
-    bye: String!
+    coucou: String!
 }
 
 type Mutation {
-    register(email: String!, password: String!): [Error!]
+    login(email: String!, password: String!): [Error!]
 }
