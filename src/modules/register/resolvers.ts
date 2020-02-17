@@ -3,7 +3,7 @@ import * as yup from 'yup';
 import { v4 } from 'uuid';
 
 import { User } from '../../entity/User';
-import { ResolveMap } from '../../types/graphql';
+import { ResolverMap } from '../../types/graphql';
 import { formatYupError } from '../../utils/formatYupError';
 import {
     duplicateEmail,
@@ -26,7 +26,7 @@ const schema = yup.object().shape({
         .max(255),
 });
 
-export const resolvers: ResolveMap = {
+export const resolvers: ResolverMap = {
     Query: {
         bye: () => 'Bye !',
     },

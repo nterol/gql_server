@@ -7,6 +7,7 @@ import {
     wongPasswordLength,
 } from './errorMessages';
 import { createTypeormConn } from '../../utils/createTypeormConn';
+// import { Connection } from 'typeorm';
 
 const email = 'bob@gmail.com';
 const password = 'bob';
@@ -20,10 +21,16 @@ const mutation = (e: string, p: string) => `
     }
 `;
 
+// let conn: Connection | any;
+
 describe('*** register test suite ***', () => {
     beforeAll(async () => {
         await createTypeormConn();
     });
+
+    // afterAll(async () => {
+    //     await conn.close();
+    // });
 
     it('should register a user', async () => {
         const response = await request(

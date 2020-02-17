@@ -1,10 +1,10 @@
 import * as bcrypt from 'bcryptjs';
 
-import { ResolveMap } from '../../types/graphql';
+import { ResolverMap } from '../../types/graphql';
 import { User } from '../../entity/User';
 import { invalidLoginMessage, pleaseConfirm } from './errorMessages';
 
-export const resolvers: ResolveMap = {
+export const resolvers: ResolverMap = {
     Query: {
         coucou: () => 'coucou',
     },
@@ -12,6 +12,7 @@ export const resolvers: ResolveMap = {
         login: async (
             _,
             { email, password }: GQL.ILoginOnMutationArguments,
+            { session },
         ) => {
             const user = await User.findOne({ where: { email } });
 
@@ -22,6 +23,9 @@ export const resolvers: ResolveMap = {
 
             if (!user.confirmed)
                 return [{ path: 'email', message: pleaseConfirm }];
+
+            //login successful
+            session.userId = user.id;
 
             return null;
         },

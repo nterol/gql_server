@@ -2,6 +2,7 @@ import { request } from 'graphql-request';
 import { invalidLoginMessage, pleaseConfirm } from './errorMessages';
 import { User } from '../../entity/User';
 import { createTypeormConn } from '../../utils/createTypeormConn';
+// import { Connection } from 'typeorm';
 
 const email = 'test@example.com';
 const password = 'dummypass';
@@ -22,10 +23,16 @@ mutation {
     }
 }`;
 
+// let conn: Connection | any;
+
 describe('*** login test suite ***', () => {
     beforeAll(async () => {
         await createTypeormConn();
     });
+
+    // afterAll(async () => {
+    //     await conn.close();
+    // });
     it('email not found return error', async () => {
         const response = await request(
             process.env.TEST_HOST as string,
@@ -58,8 +65,6 @@ describe('*** login test suite ***', () => {
             process.env.TEST_HOST as string,
             loginMutation(email, password),
         );
-
-        console.log(loginUser);
 
         expect(loginUser).toEqual({
             login: [{ path: 'email', message: pleaseConfirm }],
