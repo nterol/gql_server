@@ -2,7 +2,6 @@ import { request } from 'graphql-request';
 import { invalidLoginMessage, pleaseConfirm } from './errorMessages';
 import { User } from '../../entity/User';
 import { createTypeormConn } from '../../utils/createTypeormConn';
-// import { Connection } from 'typeorm';
 
 const email = 'test@example.com';
 const password = 'dummypass';

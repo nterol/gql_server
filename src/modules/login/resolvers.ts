@@ -24,8 +24,10 @@ export const resolvers: ResolverMap = {
             if (!user.confirmed)
                 return [{ path: 'email', message: pleaseConfirm }];
 
-            //login successful
+            // login successfull
             session.userId = user.id;
+
+            console.log('LOGIN SESSIOJN', session);
 
             return null;
         },

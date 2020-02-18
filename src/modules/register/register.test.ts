@@ -7,7 +7,6 @@ import {
     wongPasswordLength,
 } from './errorMessages';
 import { createTypeormConn } from '../../utils/createTypeormConn';
-// import { Connection } from 'typeorm';
 
 const email = 'bob@gmail.com';
 const password = 'bob';

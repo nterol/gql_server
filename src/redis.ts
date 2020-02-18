@@ -1,5 +1,3 @@
-import * as Redis from 'ioredis'
+import * as Redis from 'ioredis';
 
-const redis = new Redis()
-
-export default redis
+export const redis = new Redis();

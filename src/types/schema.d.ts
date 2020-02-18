@@ -25,10 +25,17 @@ declare namespace GQL {
     coucou: string;
     bye: string;
     hello: string;
+    me: IUser | null;
   }
 
   interface IHelloOnQueryArguments {
     name?: string | null;
+  }
+
+  interface IUser {
+    __typename: 'User';
+    id: string;
+    email: string;
   }
 
   interface IMutation {
