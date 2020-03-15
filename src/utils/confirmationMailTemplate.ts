@@ -7,7 +7,7 @@ export const registerEmailHTML = (url: string): string => {
     <mj-column>
 
       <mj-image width="50px" src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/237/waving-hand-sign_1f44b.png"></mj-image>
-      <mj-divider border-color="#14134f"></mj-divider>
+      <mj-divider border-color="#242168"></mj-divider>
 
       <mj-text font-size="20px" color="#242168" font-family="helvetica">Welcome to Grimoire !
       <p>Please verify your email adress by clicking this button to verify your email adress !</p></mj-text>

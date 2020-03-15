@@ -27,7 +27,7 @@ export const resolvers: ResolverMap = {
             // login successfull
             session.userId = user.id;
 
-            console.log('LOGIN SESSIOJN', session);
+            console.log('LOGIN SESSION', session);
 
             return null;
         },

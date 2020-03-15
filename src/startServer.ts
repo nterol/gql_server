@@ -1,24 +1,28 @@
+import 'reflect-metadata';
+import 'dotenv/config';
 import { GraphQLServer } from 'graphql-yoga';
 import * as session from 'express-session';
-import * as connectRedisStore from 'connect-redis';
+import * as connectRedis from 'connect-redis';
 
-import { createTypeormConn } from './utils/createTypeormConn';
 import { redis } from './redis';
+import { createTypeormConn } from './utils/createTypeormConn';
 import { confirmEmail } from './routes/confirmEmail';
 import { genSchema } from './utils/generateSchema';
 
 const SESSION_SECRET = 'SESSION_SECRET';
-
-const RedisStore = connectRedisStore(session);
+const RedisStore = connectRedis(session);
 
 export async function startServer() {
     const server = new GraphQLServer({
         schema: genSchema(),
-        context: ({ request }) => ({
-            redis,
-            url: request.protocol + '://' + request.get('host'),
-            session: request.session,
-        }),
+        context: ({ request }) => {
+            // console.log('CHECK WHATS IN REQUEST BRUH 🕵️‍♀️', request.session);
+            return {
+                redis,
+                url: request.protocol + '://' + request.get('host'),
+                session: request.session,
+            };
+        },
     });
 
     server.express.use(
