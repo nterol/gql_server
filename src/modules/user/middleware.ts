@@ -7,8 +7,6 @@ export default async (
     context: any,
     info: any,
 ) => {
-    // midlleware
-    console.log('MIDDLEWARE', context.session);
     const result = await resolver(parent, args, context, info);
     return result;
 };

@@ -4,7 +4,6 @@ const createMiddleware = (
     middlewareFunc: GraphqlMiddlewareFunc,
     resolverFunc: Resolver,
 ) => (parent: any, args: any, context: any, info: any) => {
-    console.log('CREATEMIDDLEWARE');
     return middlewareFunc(resolverFunc, parent, args, context, info);
 };
 
