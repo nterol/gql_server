@@ -7,6 +7,12 @@ export default async (
     context: any,
     info: any,
 ) => {
-    const result = await resolver(parent, args, context, info);
-    return result;
+    //midleWare
+    console.log('Args given 🍎', args);
+    if (!context.session || !context.session.userId)
+        throw new Error('No cookie 🙁🍪');
+
+    return resolver(parent, args, context, info);
+
+    //afterware
 };
