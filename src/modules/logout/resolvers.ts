@@ -1,4 +1,5 @@
 import { ResolverMap } from '../../types/graphql';
+import { redisSessionPrefix, userIdSessionPrefix } from '../../utils/constants';
 
 export const resolvers: ResolverMap = {
     Query: {
@@ -6,17 +7,26 @@ export const resolvers: ResolverMap = {
     },
 
     Mutation: {
-        logout: (_, __, { session }) =>
-            new Promise(res =>
-                session.destroy(err => {
-                    console.log('Logout 👋');
+        logout: async (_, __, { session, redis }) => {
+            const { userId } = session;
+            if (userId) {
+                const sessionIds = await redis.lrange(
+                    `${userIdSessionPrefix}${session.userId}`,
+                    0,
+                    -1,
+                );
 
-                    if (err) {
-                        console.log('LOG OUT ERROR', err);
-                    }
+                const promises = [];
+                for (let i = 0; i < sessionIds.length; i++) {
+                    promises.push(
+                        redis.del(`${redisSessionPrefix}${sessionIds[i]}`),
+                    );
+                }
+                await Promise.all(promises);
 
-                    res(true);
-                }),
-            ),
+                return true;
+            }
+            return false;
+        },
     },
 };
