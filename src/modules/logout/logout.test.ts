@@ -3,6 +3,7 @@ import { Connection } from 'typeorm';
 import { User } from '../../entity/User';
 import { createTypeormConn } from '../../utils/createTypeormConn';
 import { TestClient } from '../../utils/TestClient';
+import { noCookie } from '../user/errorMessage';
 
 let conn: Connection;
 let userId: string;
@@ -37,6 +38,6 @@ describe('*** logout resolver test suite ***', () => {
 
         const nullMeQueryRes = await client.me();
 
-        expect(nullMeQueryRes.errors[0].message).toBe('No cookie 🙁🍪');
+        expect(nullMeQueryRes.errors[0].message).toBe(noCookie);
     });
 });

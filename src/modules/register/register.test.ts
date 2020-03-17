@@ -1,4 +1,3 @@
-import { request } from 'graphql-request';
 import { User } from '../../entity/User';
 import {
     duplicateEmail,
@@ -7,35 +6,27 @@ import {
     wongPasswordLength,
 } from './errorMessages';
 import { createTypeormConn } from '../../utils/createTypeormConn';
+import { Connection } from 'typeorm';
+import { TestClient } from '../../utils/TestClient';
 
 const email = 'bob@gmail.com';
 const password = 'bob';
 
-const mutation = (e: string, p: string) => `
-    mutation {
-        register(email: "${e}", password: "${p}") {
-            path
-            message
-        }
-    }
-`;
-
-// let conn: Connection | any;
+let conn: Connection | any;
 
 describe('*** register test suite ***', () => {
     beforeAll(async () => {
-        await createTypeormConn();
+        conn = await createTypeormConn();
     });
 
-    // afterAll(async () => {
-    //     await conn.close();
-    // });
+    afterAll(async () => {
+        await conn.close();
+    });
+
+    const client = new TestClient(process.env.TEST_HOST as string);
 
     it('should register a user', async () => {
-        const response = await request(
-            process.env.TEST_HOST as string,
-            mutation(email, password),
-        );
+        const { data: response } = await client.register(email, password);
         expect(response).toEqual({ register: null });
 
         const users = await User.find({ where: { email } });
@@ -46,10 +37,7 @@ describe('*** register test suite ***', () => {
     });
 
     it('should not register duplicate email', async () => {
-        const response2: any = await request(
-            process.env.TEST_HOST as string,
-            mutation(email, password),
-        );
+        const { data: response2 } = await client.register(email, password);
         expect(response2.register).toHaveLength(1);
         expect(response2.register[0]).toEqual({
             path: 'email',
@@ -58,10 +46,7 @@ describe('*** register test suite ***', () => {
     });
 
     it('should not register user on wrong email', async () => {
-        const response3: any = await request(
-            process.env.TEST_HOST as string,
-            mutation('b', password),
-        );
+        const { data: response3 } = await client.register('b', password);
         expect(response3.register).toHaveLength(2);
         expect(response3.register).toEqual([
             {
@@ -76,10 +61,7 @@ describe('*** register test suite ***', () => {
     });
 
     it('should no register user on wrong password', async () => {
-        const response4: any = await request(
-            process.env.TEST_HOST as string,
-            mutation(email, 'b'),
-        );
+        const { data: response4 } = await client.register(email, 'b');
         expect(response4.register).toHaveLength(1);
         expect(response4.register).toEqual([
             {
@@ -90,10 +72,7 @@ describe('*** register test suite ***', () => {
     });
 
     it('should not register user on wrong email and password ', async () => {
-        const response4: any = await request(
-            process.env.TEST_HOST as string,
-            mutation('b', 'b'),
-        );
+        const { data: response4 } = await client.register('b', 'b');
         expect(response4.register).toHaveLength(3);
         expect(response4.register).toEqual([
             {
