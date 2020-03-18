@@ -2,7 +2,11 @@ import * as bcrypt from 'bcryptjs';
 
 import { ResolverMap } from '../../types/graphql';
 import { User } from '../../entity/User';
-import { invalidLoginMessage, pleaseConfirm } from './errorMessages';
+import {
+    invalidLoginMessage,
+    pleaseConfirm,
+    accountIsLocked,
+} from './errorMessages';
 import { userIdSessionPrefix } from '../../utils/constants';
 
 export const resolvers: ResolverMap = {
@@ -25,6 +29,8 @@ export const resolvers: ResolverMap = {
             if (!user.confirmed)
                 return [{ path: 'email', message: pleaseConfirm }];
 
+            if (user.accountLocked)
+                return [{ path: 'email', message: accountIsLocked }];
             // login successfull
             session.userId = user.id;
             if (req.sessionID)

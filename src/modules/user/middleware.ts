@@ -9,7 +9,6 @@ export default async (
     info: any,
 ) => {
     //midleWare
-    console.log('Args given 🍎', args);
     if (!context.session || !context.session.userId) throw new Error(noCookie);
 
     return resolver(parent, args, context, info);

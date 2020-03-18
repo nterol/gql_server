@@ -3,7 +3,7 @@ import {
     duplicateEmail,
     wrongEmailLength,
     wrongEmailFormat,
-    wongPasswordLength,
+    wrongPasswordLength,
 } from './errorMessages';
 import { createTypeormConn } from '../../utils/createTypeormConn';
 import { Connection } from 'typeorm';
@@ -66,7 +66,7 @@ describe('*** register test suite ***', () => {
         expect(response4.register).toEqual([
             {
                 path: 'password',
-                message: wongPasswordLength,
+                message: wrongPasswordLength,
             },
         ]);
     });
@@ -85,7 +85,7 @@ describe('*** register test suite ***', () => {
             },
             {
                 path: 'password',
-                message: wongPasswordLength,
+                message: wrongPasswordLength,
             },
         ]);
     });

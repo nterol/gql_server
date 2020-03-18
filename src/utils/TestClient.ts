@@ -60,6 +60,20 @@ export class TestClient {
         });
     }
 
+    async changePassword(newPassword: string, key: string) {
+        return rpromise.post(this._url, {
+            ...this._options,
+            body: {
+                query: `mutation {
+                    changePassword(newPassword: "${newPassword}", key: "${key}") {
+                        path
+                        message
+                    }
+                }`,
+            },
+        });
+    }
+
     async logout() {
         return rpromise.post(this._url, {
             ...this._options,
