@@ -2,13 +2,14 @@ import 'reflect-metadata';
 import 'dotenv/config';
 import { GraphQLServer } from 'graphql-yoga';
 import * as session from 'express-session';
+const rateLimit = require('express-rate-limit');
+const RateLimitStore = require('rate-limit-redis');
 
 import { redis } from './redis';
 import { createTypeormConn } from './utils/createTypeormConn';
 import { confirmEmail } from './routes/confirmEmail';
 import { genSchema } from './utils/generateSchema';
 import { redisSessionPrefix } from './utils/constants';
-
 const RedisStore = require('connect-redis')(session);
 const SESSION_SECRET = 'SESSION_SECRET';
 
@@ -25,6 +26,15 @@ export async function startServer() {
             };
         },
     });
+
+    server.express.use(
+        rateLimit({
+            store: new RateLimitStore({ client: redis }),
+            windowMs: 15 * 60 * 1000,
+            max: 100,
+            delayMs: 0,
+        }),
+    );
 
     server.express.use(
         session({
