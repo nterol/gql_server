@@ -55,12 +55,6 @@ describe('forgot password test suite', () => {
 
         expect(response.data).toEqual({ changePassword: null });
 
-        const reresponse = await client.changePassword('k', key);
-
-        expect(reresponse.data).toEqual({
-            changePassword: [{ path: 'key', message: expiredLink }],
-        });
-
         expect(await client.login(email, password)).toEqual({
             data: { login: [{ message: invalidLogin, path: 'login' }] },
         });

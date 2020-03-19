@@ -62,13 +62,14 @@ export const resolvers: ResolverMap = {
             }
 
             const hashedPassword = await bcrypt.hash(newPassword, 10);
-
-            await User.update(
+            const userUpdatePromise = User.update(
                 { id: userId },
                 { accountLocked: false, password: hashedPassword },
             );
 
-            await redis.del(`${forgotPasswordPrefix}${key}`);
+            const deleteRedisKey = redis.del(`${forgotPasswordPrefix}${key}`);
+
+            await Promise.all([userUpdatePromise, deleteRedisKey]);
 
             return null;
         },
