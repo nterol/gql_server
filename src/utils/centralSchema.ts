@@ -3,7 +3,7 @@ import {
     wrongEmailLength,
     wrongEmailFormat,
     wrongPasswordLength,
-} from '../modules/register/errorMessages';
+} from '../modules/user/register/errorMessages';
 
 export const registerPasswordValidation = yup
     .string()

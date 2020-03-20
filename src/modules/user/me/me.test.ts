@@ -1,7 +1,7 @@
-import { User } from '../../entity/User';
-import { createTypeormConn } from '../../utils/createTypeormConn';
+import { User } from '../../../entity/User';
+import { createTypeormConn } from '../../../utils/createTypeormConn';
 import { Connection } from 'typeorm';
-import { TestClient } from '../../utils/TestClient';
+import { TestClient } from '../../../utils/TestClient';
 import { noCookie } from './errorMessage';
 
 const email = 'bob@gmail.com';

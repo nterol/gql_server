@@ -1,18 +1,15 @@
 import * as bcrypt from 'bcryptjs';
 
-import { ResolverMap } from '../../types/graphql';
-import { User } from '../../entity/User';
+import { ResolverMap } from '../../../types/graphql';
+import { User } from '../../../entity/User';
 import {
     invalidLoginMessage,
     pleaseConfirm,
     accountIsLocked,
 } from './errorMessages';
-import { userIdSessionPrefix } from '../../utils/constants';
+import { userIdSessionPrefix } from '../../../utils/constants';
 
 export const resolvers: ResolverMap = {
-    Query: {
-        coucou: () => 'coucou',
-    },
     Mutation: {
         login: async (
             _,

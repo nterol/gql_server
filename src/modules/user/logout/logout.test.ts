@@ -1,9 +1,9 @@
 import { Connection } from 'typeorm';
 
-import { User } from '../../entity/User';
-import { createTypeormConn } from '../../utils/createTypeormConn';
-import { TestClient } from '../../utils/TestClient';
-import { noCookie } from '../user/errorMessage';
+import { User } from '../../../entity/User';
+import { createTypeormConn } from '../../../utils/createTypeormConn';
+import { TestClient } from '../../../utils/TestClient';
+import { noCookie } from '../me/errorMessage';
 
 let conn: Connection;
 let userId: string;

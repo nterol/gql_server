@@ -1,12 +1,12 @@
 import * as Redis from 'ioredis';
 import { Connection } from 'typeorm';
 
-import { createTypeormConn } from '../../utils/createTypeormConn';
-import { User } from '../../entity/User';
-import { TestClient } from '../../utils/TestClient';
-import { createForgotPasswordLink } from '../../utils/createForgotPasswordLink';
+import { createTypeormConn } from '../../../utils/createTypeormConn';
+import { User } from '../../../entity/User';
+import { TestClient } from '../../../utils/TestClient';
+import { createForgotPasswordLink } from '../../../utils/createForgotPasswordLink';
 import { invalidLogin, accountIsLocked } from '../login/errorMessages';
-import { lockUserAccount } from '../../utils/lockUserAccount';
+import { lockUserAccount } from '../../../utils/lockUserAccount';
 import { expiredLink } from './errorMessage';
 import { wrongEmailLength } from '../register/errorMessages';
 

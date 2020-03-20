@@ -1,9 +1,9 @@
 import { Connection } from 'typeorm';
 
 import { invalidLoginMessage, pleaseConfirm } from './errorMessages';
-import { User } from '../../entity/User';
-import { createTypeormConn } from '../../utils/createTypeormConn';
-import { TestClient } from '../../utils/TestClient';
+import { User } from '../../../entity/User';
+import { createTypeormConn } from '../../../utils/createTypeormConn';
+import { TestClient } from '../../../utils/TestClient';
 
 const email = 'test@example.com';
 const password = 'dummypass';

@@ -1,13 +1,13 @@
-import { User } from '../../entity/User';
+import { User } from '../../../entity/User';
 import {
     duplicateEmail,
     wrongEmailLength,
     wrongEmailFormat,
     wrongPasswordLength,
 } from './errorMessages';
-import { createTypeormConn } from '../../utils/createTypeormConn';
+import { createTypeormConn } from '../../../utils/createTypeormConn';
 import { Connection } from 'typeorm';
-import { TestClient } from '../../utils/TestClient';
+import { TestClient } from '../../../utils/TestClient';
 
 const email = 'bob@gmail.com';
 const password = 'bob';

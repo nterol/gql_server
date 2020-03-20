@@ -1,7 +1,7 @@
 import * as SparkPost from 'sparkpost';
 import { registerEmailHTML } from './confirmationMailTemplate';
 
-const client = new SparkPost(process.env.SPARKPOST_API_KEY);
+const client = new SparkPost(process.env.SPARKPOST_API_KEY || 'fakeapikey');
 
 export const sendEmail = async (
     recipient: string,
