@@ -4,9 +4,14 @@ import {
     BaseEntity,
     PrimaryGeneratedColumn,
     BeforeInsert,
+    OneToMany,
 } from 'typeorm';
 
 import * as bcrypt from 'bcryptjs';
+
+import { Graph } from './Graph';
+import { Note } from './Note';
+import { Edge } from './Edge';
 
 @Entity('users')
 export class User extends BaseEntity {
@@ -24,6 +29,30 @@ export class User extends BaseEntity {
 
     @Column('boolean', { default: false })
     accountLocked: boolean;
+
+    @OneToMany(
+        type => {
+            console.log('USER TYPE', type);
+            return Graph;
+        },
+        graph => graph.author,
+    )
+    graphs: Graph[];
+
+    @OneToMany(
+        type => {
+            console.log('User notes', type);
+            return Note;
+        },
+        note => note.author,
+    )
+    notes: Note[];
+
+    @OneToMany(
+        () => Edge,
+        edge => edge.author,
+    )
+    edges: Edge[];
 
     @BeforeInsert()
     async hashPasswordBeforeInsert() {

@@ -29,6 +29,34 @@ declare namespace GQL {
     __typename: 'User';
     id: string;
     email: string;
+    graphs: Array<IGraph>;
+    notes: Array<INote>;
+  }
+
+  interface IGraph {
+    __typename: 'Graph';
+    id: string;
+    title: string;
+    author: IUser;
+    notes: Array<INote> | null;
+    edges: Array<IEdge> | null;
+  }
+
+  interface INote {
+    __typename: 'Note';
+    id: string;
+    title: string;
+    author: IUser;
+    asSource: IEdge;
+    asTarget: IEdge;
+  }
+
+  interface IEdge {
+    __typename: 'Edge';
+    id: string;
+    title: string;
+    source: INote;
+    target: INote;
   }
 
   interface IMutation {

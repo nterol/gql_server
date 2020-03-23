@@ -1,0 +1,7 @@
+type Graph {
+    id: ID!
+    title: String!
+    author: User!
+    notes: [Note!]
+    edges: [Edge!]
+}

@@ -1,0 +1,6 @@
+type Edge {
+    id: ID!
+    title: String!
+    source: Note!
+    target: Note!
+}

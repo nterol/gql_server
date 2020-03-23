@@ -1,12 +1,23 @@
-// import { Entity, Column, BaseEntity, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 
-// // import * as bcrypt from 'bcryptjs';
+import { User } from './User';
 
-// @Entity('graphs')
-// export class Graph extends BaseEntity {
-//     @PrimaryGeneratedColumn('uuid')
-//     id: string;
+// import * as bcrypt from 'bcryptjs';
 
-//     @Column('varchar', { length: 255 })
-//     name: string;
-// }
+@Entity('graphs')
+export class Graph {
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
+
+    @Column('varchar', { length: 255 })
+    title: string;
+
+    @ManyToOne(
+        type => {
+            console.log('GRAPH TYPE', type);
+            return User;
+        },
+        user => user.graphs,
+    )
+    author: User;
+}
