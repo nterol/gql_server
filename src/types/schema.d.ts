@@ -22,15 +22,45 @@ declare namespace GQL {
 
   interface IQuery {
     __typename: 'Query';
+    edge: IEdge;
+    edges: Array<IEdge | null>;
+    note: INote;
+    notes: Array<INote>;
     me: IUser | null;
+  }
+
+  interface IEdgeOnQueryArguments {
+    id: string;
+  }
+
+  interface INoteOnQueryArguments {
+    id: string;
+  }
+
+  interface IEdge {
+    __typename: 'Edge';
+    id: string;
+    title: string;
+    source: INote;
+    target: INote;
+  }
+
+  interface INote {
+    __typename: 'Note';
+    id: string;
+    title: string;
+    body: string | null;
+    author: IUser;
+    asSource: IEdge | null;
+    asTarget: IEdge | null;
   }
 
   interface IUser {
     __typename: 'User';
     id: string;
     email: string;
-    graphs: Array<IGraph>;
-    notes: Array<INote>;
+    graphs: Array<IGraph> | null;
+    notes: Array<INote> | null;
   }
 
   interface IGraph {
@@ -42,30 +72,42 @@ declare namespace GQL {
     edges: Array<IEdge> | null;
   }
 
-  interface INote {
-    __typename: 'Note';
-    id: string;
-    title: string;
-    author: IUser;
-    asSource: IEdge;
-    asTarget: IEdge;
-  }
-
-  interface IEdge {
-    __typename: 'Edge';
-    id: string;
-    title: string;
-    source: INote;
-    target: INote;
-  }
-
   interface IMutation {
     __typename: 'Mutation';
+    addEdge: IEdge | null;
+    removeEdge: Array<IError>;
+    createGraph: Array<IError> | null;
+    createNote: INote | null;
+    deleteNote: Array<IError> | null;
     sendForgotPasswordEmail: boolean | null;
     changePassword: Array<IError> | null;
     login: Array<IError> | null;
     logout: boolean | null;
     register: Array<IError> | null;
+  }
+
+  interface IAddEdgeOnMutationArguments {
+    sourceId: string;
+    targetId: string;
+    title: string;
+  }
+
+  interface IRemoveEdgeOnMutationArguments {
+    id: string;
+  }
+
+  interface ICreateGraphOnMutationArguments {
+    title: string;
+  }
+
+  interface ICreateNoteOnMutationArguments {
+    title: string;
+    body?: string | null;
+    graphId: string;
+  }
+
+  interface IDeleteNoteOnMutationArguments {
+    noteId: string;
   }
 
   interface ISendForgotPasswordEmailOnMutationArguments {

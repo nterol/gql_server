@@ -31,26 +31,23 @@ export class User extends BaseEntity {
     accountLocked: boolean;
 
     @OneToMany(
-        type => {
-            console.log('USER TYPE', type);
-            return Graph;
-        },
+        () => Graph,
         graph => graph.author,
+        { onDelete: 'CASCADE' },
     )
     graphs: Graph[];
 
     @OneToMany(
-        type => {
-            console.log('User notes', type);
-            return Note;
-        },
+        () => Note,
         note => note.author,
+        { onDelete: 'CASCADE' },
     )
     notes: Note[];
 
     @OneToMany(
         () => Edge,
         edge => edge.author,
+        { onDelete: 'CASCADE' },
     )
     edges: Edge[];
 

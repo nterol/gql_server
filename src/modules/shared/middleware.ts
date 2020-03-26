@@ -1,5 +1,5 @@
-import { Resolver } from '../../../types/graphql';
-import { noCookie } from './errorMessage';
+import { Resolver } from '../../types/graphql';
+import { noCookie } from '../user/me/errorMessage';
 
 export default async (
     resolver: Resolver,

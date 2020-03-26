@@ -1,0 +1,4 @@
+type Mutation {
+    createNote(title: String!, body: String, graphId: ID!): Note
+    deleteNote(noteId: ID!): [Error!]
+}

@@ -1,0 +1,9 @@
+type Query {
+    edge(id: ID!): Edge!
+    edges: [Edge]!
+}
+
+type Mutation {
+    addEdge(sourceId: ID!, targetId: ID!, title: String!): Edge
+    removeEdge(id: ID!): [Error!]!
+}

@@ -1,7 +1,8 @@
 type Note {
     id: ID!
     title: String!
+    body: String
     author: User!
-    asSource: Edge!
-    asTarget: Edge!
+    asSource: Edge
+    asTarget: Edge
 }
