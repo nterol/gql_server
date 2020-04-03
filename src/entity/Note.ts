@@ -3,12 +3,10 @@ import {
     Column,
     PrimaryGeneratedColumn,
     ManyToOne,
-    OneToOne,
+    OneToMany,
     BaseEntity,
-    // PrimaryColumn,
 } from 'typeorm';
 
-// import { Graph } from './Graph';
 import { User } from './User';
 import { Edge } from './Edge';
 import { Graph } from './Graph';
@@ -27,28 +25,28 @@ export class Note extends BaseEntity {
     @ManyToOne(
         () => Graph,
         graph => graph.notes,
-        { onDelete: 'SET NULL' },
+        { onDelete: 'SET NULL', cascade: ['insert', 'update'] },
     )
     graph: Graph;
 
     @ManyToOne(
         () => User,
         user => user.notes,
-        { onDelete: 'SET NULL' },
+        { onDelete: 'SET NULL', cascade: ['insert', 'update'] },
     )
     author: User;
 
-    @OneToOne(
+    @OneToMany(
         () => Edge,
         edge => edge.target,
         { onDelete: 'CASCADE' },
     )
-    asTarget: Edge;
+    asTarget: Edge[];
 
-    @OneToOne(
+    @OneToMany(
         () => Edge,
         edge => edge.source,
         { onDelete: 'CASCADE' },
     )
-    asSource: Edge;
+    asSource: Edge[];
 }

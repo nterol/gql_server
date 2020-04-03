@@ -7,11 +7,13 @@ import { Note } from '../../entity/Note';
 export const resolver: ResolverMap = {
     Query: {
         edge: async (_, { id }) => {
+            console.log('EDGE', id);
             const edge = await Edge.findOne({ where: { id } });
             return edge;
         },
 
         edges: async (_, __, { session }) => {
+            console.log('SESSION FROM EDGES', session);
             const edges = await Edge.find({
                 where: { author: session.userId },
             });
@@ -32,8 +34,8 @@ export const resolver: ResolverMap = {
 
             if (source && target) {
                 const edge = Edge.create({ id: v4(), target, source, title });
-                source.asSource = edge;
-                target.asTarget = edge;
+                source.asSource = [edge];
+                target.asTarget = [edge];
 
                 await Promise.all([edge.save(), source.save(), target.save()]);
 

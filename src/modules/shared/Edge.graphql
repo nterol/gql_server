@@ -3,4 +3,5 @@ type Edge {
     title: String!
     source: Note!
     target: Note!
+    graph: Graph!
 }

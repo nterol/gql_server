@@ -1,13 +1,28 @@
 import { v4 } from 'uuid';
 
-import { ResolverMap } from '../../../types/graphql';
-import createMiddleware from '../../../utils/createMiddleware';
-import middleware from '../../shared/middleware';
-import { Graph } from '../../../entity/Graph';
-import { Note } from '../../../entity/Note';
-import { User } from '../../../entity/User';
+import { ResolverMap } from '../../types/graphql';
+import createMiddleware from '../../utils/createMiddleware';
+import middleware from '../shared/middleware';
+import { Graph } from '../../entity/Graph';
+import { Note } from '../../entity/Note';
+import { User } from '../../entity/User';
 
 export const resolvers: ResolverMap = {
+    Query: {
+        note: async (_, { id }) => {
+            const note = await Note.findOne({ where: { id } });
+            return note;
+        },
+
+        notes: async (_, __, { session }) => {
+            console.log('SESSION NOTES', session.userId);
+            const notes = await Note.find({
+                where: { author: session.userId },
+            });
+
+            return notes;
+        },
+    },
     Mutation: {
         createNote: createMiddleware(
             middleware,
@@ -18,21 +33,19 @@ export const resolvers: ResolverMap = {
                 ]);
 
                 if (graph && user) {
-                    console.log(graph);
-
                     const newNote = Note.create({
                         id: v4(),
                         title,
                         body,
+                        author: user,
                         graph: graph,
                     });
+
                     graph.notes = [newNote];
                     user.notes = [newNote];
-                    await Promise.all([
-                        newNote.save(),
-                        graph.save(),
-                        user.save(),
-                    ]);
+                    await Promise.all([graph.save(), user.save()]);
+
+                    await newNote.save();
 
                     return newNote;
                 }

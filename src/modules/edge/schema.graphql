@@ -1,6 +1,6 @@
 type Query {
     edge(id: ID!): Edge!
-    edges: [Edge]!
+    edges: [Edge!]!
 }
 
 type Mutation {

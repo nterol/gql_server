@@ -7,6 +7,19 @@ import { User } from '../../entity/User';
 import { Graph } from '../../entity/Graph';
 
 export const resolvers: ResolverMap = {
+    Query: {
+        graph: async (_, { id }) => {
+            const graph = await Graph.findOne({ where: { id } });
+            return graph;
+        },
+        graphs: async (_, __, { session }) => {
+            const graphs = await Graph.find({
+                where: { author: session.userId },
+            });
+
+            return graphs;
+        },
+    },
     Mutation: {
         createGraph: createMiddleware(
             middleware,

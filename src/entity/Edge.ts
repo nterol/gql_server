@@ -2,7 +2,6 @@ import {
     Entity,
     PrimaryGeneratedColumn,
     Column,
-    OneToOne,
     BaseEntity,
     ManyToOne,
 } from 'typeorm';
@@ -33,14 +32,14 @@ export class Edge extends BaseEntity {
     )
     graph: Graph;
 
-    @OneToOne(
+    @ManyToOne(
         () => Note,
         note => note.asTarget,
         { onDelete: 'SET NULL' },
     )
     target: Note;
 
-    @OneToOne(
+    @ManyToOne(
         () => Note,
         note => note.asSource,
         { onDelete: 'SET NULL' },

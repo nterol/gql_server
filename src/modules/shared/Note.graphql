@@ -1,8 +1,9 @@
 type Note {
     id: ID!
     title: String!
-    body: String
+    body: String!
     author: User!
-    asSource: Edge
-    asTarget: Edge
+    graph: Graph!
+    asSource: [Edge!]!
+    asTarget: [Edge!]!
 }

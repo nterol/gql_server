@@ -1,3 +1,8 @@
+type Query {
+    graph(id: ID!): Graph
+    graphs: [Graph!]!
+}
+
 type Mutation {
     createGraph(title: String!): [Error!]
 }

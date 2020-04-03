@@ -23,13 +23,19 @@ declare namespace GQL {
   interface IQuery {
     __typename: 'Query';
     edge: IEdge;
-    edges: Array<IEdge | null>;
+    edges: Array<IEdge>;
+    graph: IGraph | null;
+    graphs: Array<IGraph>;
     note: INote;
     notes: Array<INote>;
     me: IUser | null;
   }
 
   interface IEdgeOnQueryArguments {
+    id: string;
+  }
+
+  interface IGraphOnQueryArguments {
     id: string;
   }
 
@@ -43,16 +49,18 @@ declare namespace GQL {
     title: string;
     source: INote;
     target: INote;
+    graph: IGraph;
   }
 
   interface INote {
     __typename: 'Note';
     id: string;
     title: string;
-    body: string | null;
+    body: string;
     author: IUser;
-    asSource: IEdge | null;
-    asTarget: IEdge | null;
+    graph: IGraph;
+    asSource: Array<IEdge>;
+    asTarget: Array<IEdge>;
   }
 
   interface IUser {

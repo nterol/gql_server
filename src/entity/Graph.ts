@@ -11,8 +11,6 @@ import { User } from './User';
 import { Note } from './Note';
 import { Edge } from './Edge';
 
-// import * as bcrypt from 'bcryptjs';
-
 @Entity('graphs')
 export class Graph extends BaseEntity {
     @PrimaryGeneratedColumn('uuid')
