@@ -10,14 +10,33 @@ import { User } from '../../entity/User';
 export const resolvers: ResolverMap = {
     Query: {
         note: async (_, { id }) => {
-            const note = await Note.findOne({ where: { id } });
+            const note = await Note.findOne({
+                where: { id },
+                join: {
+                    alias: 'note',
+                    leftJoinAndSelect: {
+                        author: 'note.author',
+                        asSource: 'note.asSource',
+                        asTarget: 'note.asTarget',
+                        graph: 'note.graph',
+                    },
+                },
+            });
             return note;
         },
 
         notes: async (_, __, { session }) => {
-            console.log('SESSION NOTES', session.userId);
             const notes = await Note.find({
                 where: { author: session.userId },
+                join: {
+                    alias: 'note',
+                    leftJoinAndSelect: {
+                        author: 'note.author',
+                        asSource: 'note.asSource',
+                        asTarget: 'note.asTarget',
+                        graph: 'note.graph',
+                    },
+                },
             });
 
             return notes;
@@ -41,10 +60,6 @@ export const resolvers: ResolverMap = {
                         graph: graph,
                     });
 
-                    graph.notes = [newNote];
-                    user.notes = [newNote];
-                    await Promise.all([graph.save(), user.save()]);
-
                     await newNote.save();
 
                     return newNote;
@@ -52,6 +67,18 @@ export const resolvers: ResolverMap = {
                 return null;
             },
         ),
+        updateNote: async (_, { id, title, body }) => {
+            const note = await Note.findOne({ where: { id } });
+
+            if (note) {
+                if (title) note.title = title;
+                if (body) note.body = body;
+
+                await note.save();
+            }
+
+            return note;
+        },
         deleteNote: createMiddleware(middleware, async (_, { noteId }) => {
             const note = await Note.findOne({ where: { id: noteId } });
             if (note) {
