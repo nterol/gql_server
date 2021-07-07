@@ -15,7 +15,17 @@ export const resolvers: ResolverMap = {
         graphs: async (_, __, { session }) => {
             const graphs = await Graph.find({
                 where: { author: session.userId },
+                join: {
+                    alias: 'graph',
+                    leftJoinAndSelect: {
+                        author: 'graph.author',
+                        notes: 'graph.notes',
+                        edges: 'graph.edges',
+                    },
+                },
             });
+
+            console.log('💰 Graphs', graphs);
 
             return graphs;
         },

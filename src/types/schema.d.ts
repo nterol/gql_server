@@ -86,6 +86,7 @@ declare namespace GQL {
     removeEdge: Array<IError>;
     createGraph: Array<IError> | null;
     createNote: INote | null;
+    updateNote: INote | null;
     deleteNote: Array<IError> | null;
     sendForgotPasswordEmail: boolean | null;
     changePassword: Array<IError> | null;
@@ -112,6 +113,12 @@ declare namespace GQL {
     title: string;
     body?: string | null;
     graphId: string;
+  }
+
+  interface IUpdateNoteOnMutationArguments {
+    id: string;
+    title?: string | null;
+    body?: string | null;
   }
 
   interface IDeleteNoteOnMutationArguments {

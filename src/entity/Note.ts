@@ -10,7 +10,6 @@ import {
 import { User } from './User';
 import { Edge } from './Edge';
 import { Graph } from './Graph';
-
 @Entity('notes')
 export class Note extends BaseEntity {
     @PrimaryGeneratedColumn('uuid')
@@ -39,7 +38,7 @@ export class Note extends BaseEntity {
     @OneToMany(
         () => Edge,
         edge => edge.target,
-        { onDelete: 'CASCADE' },
+        { cascade: ['insert', 'update', 'remove'] },
     )
     asTarget: Edge[];
 

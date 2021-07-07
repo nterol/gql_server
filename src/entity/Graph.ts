@@ -5,6 +5,7 @@ import {
     ManyToOne,
     BaseEntity,
     OneToMany,
+    JoinTable,
 } from 'typeorm';
 
 import { User } from './User';
@@ -22,8 +23,9 @@ export class Graph extends BaseEntity {
     @ManyToOne(
         () => User,
         user => user.graphs,
-        { onDelete: 'SET NULL' },
+        { onDelete: 'SET NULL', eager: true },
     )
+    @JoinTable()
     author: User;
 
     @OneToMany(
